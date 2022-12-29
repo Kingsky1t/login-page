@@ -36,9 +36,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
-app.get("/",checkAuthentication, (req, res) => {
-     res.render("instructions.ejs");
+app.get("/", (req, res) => {
+     res.render("index.ejs");
 });
+
 
 
 // here you will add your new paths 
@@ -52,6 +53,10 @@ app.get("/",checkAuthentication, (req, res) => {
 // remember to end your file with .ejs dont worry about html
 // make sure your path name and path at anchor tag matches
 
+
+app.get("/instructions",checkAuthentication, (req, res) => {
+     res.render("instructions.ejs");
+});
 app.get("/final1",checkAuthentication, (req, res) => {
      res.render("final1.ejs");
 });
@@ -116,11 +121,11 @@ function checkAuthentication(req,res,next) {
      if(req.isAuthenticated()) {
           return next();
      }
-     res.redirect('/login');
+     res.redirect('/');
 }
 function checkNotAuthentication(req,res,next) {
      if(req.isAuthenticated()) {
-          return res.redirect('/');
+          return res.redirect('/instructions');
      }
      next();
 }
